@@ -84,13 +84,13 @@ async function shortenUrl(url: string): Promise<{ shortUrl: string | null; error
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10_000);
 
-    const response = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`, {
+    const response = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`, {
       signal: controller.signal,
     });
     clearTimeout(timeout);
 
     if (!response.ok) {
-      return { shortUrl: null, error: `TinyURL returned HTTP ${response.status}` };
+      return { shortUrl: null, error: `is.gd returned HTTP ${response.status}` };
     }
 
     const text = await response.text();
@@ -98,7 +98,7 @@ async function shortenUrl(url: string): Promise<{ shortUrl: string | null; error
       return { shortUrl: text.trim(), error: null };
     }
 
-    return { shortUrl: null, error: `Unexpected TinyURL response: ${text}` };
+    return { shortUrl: null, error: `is.gd error: ${text}` };
   } catch (err: unknown) {
     if (err instanceof Error && err.name === "AbortError") {
       return { shortUrl: null, error: "Request timed out after 10s" };

@@ -17,7 +17,7 @@ Paste URLs → get **permanent archive.org snapshots** + **TinyURL short links**
 |---------|-------------------------------|
 | App     | Next.js 15 (App Router)       |
 | Archive | archive.org Save Page Now API |
-| Shorten | TinyURL free API              |
+| Shorten | is.gd free API                |
 
 ## Setup
 
@@ -62,4 +62,4 @@ yarn start
 
 - archive.org can be slow (up to 30s per URL) — the UI shows a progress indicator
 - archive.org may rate-limit heavy usage; results are best-effort
-- TinyURL's free API requires no authentication
+- is.gd's free API requires no authentication

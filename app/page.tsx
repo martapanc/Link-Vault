@@ -166,7 +166,7 @@ export default function Page() {
           <div style={styles.headerMeta}>
             <span style={styles.metaChip}>archive.org</span>
             <span style={styles.metaDivider}>+</span>
-            <span style={styles.metaChip}>TinyURL</span>
+            <span style={styles.metaChip}>is.gd</span>
           </div>
         </div>
         <p style={styles.tagline}>
@@ -256,7 +256,7 @@ export default function Page() {
       </main>
 
       <footer style={styles.footer}>
-        <span>LINK VAULT · archive.org Save Page Now · TinyURL API</span>
+        <span>LINK VAULT · archive.org Save Page Now · is.gd API</span>
       </footer>
     </div>
   );
