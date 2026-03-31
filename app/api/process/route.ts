@@ -1,6 +1,42 @@
 import type { LinkResult } from "@/lib/types";
 
+const RECENT_SNAPSHOT_HOURS = 24;
+
+async function getExistingSnapshot(url: string): Promise<string | null> {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5_000);
+    const response = await fetch(
+      `https://archive.org/wayback/available?url=${encodeURIComponent(url)}`,
+      { signal: controller.signal }
+    );
+    clearTimeout(timeout);
+
+    if (!response.ok) return null;
+
+    const data = await response.json() as {
+      archived_snapshots?: { closest?: { available: boolean; url: string; timestamp: string } };
+    };
+    const closest = data.archived_snapshots?.closest;
+    if (!closest?.available) return null;
+
+    // Only reuse snapshots captured within the last RECENT_SNAPSHOT_HOURS
+    const snapshotDate = new Date(
+      closest.timestamp.replace(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1-$2-$3T$4:$5:$6Z")
+    );
+    const ageHours = (Date.now() - snapshotDate.getTime()) / 36e5;
+    if (ageHours > RECENT_SNAPSHOT_HOURS) return null;
+
+    return closest.url;
+  } catch {
+    return null;
+  }
+}
+
 async function archiveUrl(url: string): Promise<{ archiveUrl: string | null; error: string | null }> {
+  const existing = await getExistingSnapshot(url);
+  if (existing) return { archiveUrl: existing, error: null };
+
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 30_000);
