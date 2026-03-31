@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/martapanc/Link-Vault/compare/v1.0.0...v1.1.0) (2026-03-31)
+
+
+### Features
+
+* replace TinyURL with is.gd for URL shortening ([3f05f66](https://github.com/martapanc/Link-Vault/commit/3f05f6604d09c78f3e7ecdb296bdf4edf4279148))
+
 ## 1.0.0 (2026-03-31)
 
 
