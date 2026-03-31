@@ -1,0 +1,13 @@
+on:
+  push:
+    branches: [master]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    uses: martapanc/shared-workflows/.github/workflows/release-please.yml@master
+    with:
+      release-type: node
